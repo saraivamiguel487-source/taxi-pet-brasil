@@ -238,6 +238,7 @@
                 <li>Brinquedos</li>
                 <li>Camas</li>
                 <li>Roupas</li>
+                
             </ul>
             <section class="tosas"><p>Serviços de tosa e banho</p></section>
             <ul>
@@ -264,8 +265,60 @@
             <footer>
                 <p>&copy; 2024 Táxi Pet Brasil. Todos os direitos reservados.</p>
             </footer>
-            <script>
+            
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.querySelector('form');
+        const emailInput = document.getElementById('email');
+        const senhaInput = document.getElementById('senha');
 
-            </script>
+        form.addEventListener('submit', (event) => {
+            let isValid = true;
+
+
+            document.querySelectorAll('.invalid-feedback').forEach(el => el.remove());
+            emailInput.classList.remove('is-invalid');
+            senhaInput.classList.remove('is-invalid');
+
+
+            const emailValue = emailInput.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!emailValue) {
+                mostrarErro(emailInput, 'Por favor, informe seu e-mail.');
+                isValid = false;
+            } else if (!emailRegex.test(emailValue)) {
+                mostrarErro(emailInput, 'Digite um e-mail válido.');
+                isValid = false;
+            }
+
+            const senhaValue = senhaInput.value;
+            
+            if (!senhaValue) {
+                mostrarErro(senhaInput, 'Por favor, informe sua senha.');
+                isValid = false;
+            } else if (senhaValue.length < 6) {
+                mostrarErro(senhaInput, 'A senha deve ter pelo menos 6 caracteres.');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                event.preventDefault();
+            }
+        });
+
+
+        function mostrarErro(input, mensagem) {
+            input.classList.add('is-invalid');
+            
+            const feedback = document.createElement('div');
+            feedback.className = 'invalid-feedback';
+            feedback.innerText = mensagem;
+            
+            input.parentElement.appendChild(feedback);
+        }
+    });
+</script>
+        
         </body>
         </html>
